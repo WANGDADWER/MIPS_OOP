@@ -1,5 +1,7 @@
 #include "MIPS.h"
 #include <pybind11/pybind11.h>
+#include <pybind11/eigen.h>
+#include "space_ip.h"
 using namespace std;
 
 //CONSTRUCT
@@ -17,11 +19,11 @@ MIPS::MIPS(int N, int Q, int D, int K, int B, bool save)
     // Internal params
     PARAM_INTERNAL_SAVE_OUTPUT = save; // save the results
 
-    printf("N:%d, Q:%d, D:%d, K:%d, B:%d\n",PARAM_DATA_N,PARAM_QUERY_Q,PARAM_DATA_D,PARAM_MIPS_TOP_K,PARAM_MIPS_TOP_B);
+    //printf("MIPS init N:%d, Q:%d, D:%d, K:%d, B:%d\n",PARAM_DATA_N,PARAM_QUERY_Q,PARAM_DATA_D,PARAM_MIPS_TOP_K,PARAM_MIPS_TOP_B);
 }
 
 //read the Matrix X from path
-void MIPS::read_matrix_x(const char *path){
+void MIPS::read_X_from_file(const char *path){
     FILE *f = fopen(path, "r");
     if (!f)
     {
@@ -29,8 +31,9 @@ void MIPS::read_matrix_x(const char *path){
         exit(1);
     }
     
-    printf("D:%d,N:%d\n",MIPS::PARAM_DATA_D,MIPS::PARAM_DATA_N);
-    //cout << PARAM_DATA_D << PARAM_DATA_N << endl;
+    //printf("MIPS read: N:%d,D:%d\n",PARAM_DATA_N, PARAM_DATA_D);
+    
+    cout << PARAM_DATA_N  << "," << PARAM_DATA_D << endl;
     FVector vecTempX(PARAM_DATA_D * PARAM_DATA_N, 0.0);
 
     // Each line is a vector of D dimensions
@@ -51,7 +54,7 @@ void MIPS::read_matrix_x(const char *path){
 
 
 //read the Matrix Q from path
-void MIPS::read_matrix_q(const char *path){
+void MIPS::read_Q_from_file(const char *path){
 
     FILE *f = fopen(path, "r+");
     if (!f)
@@ -73,6 +76,15 @@ void MIPS::read_matrix_q(const char *path){
 
     MATRIX_Q = Map<MatrixXf>(vecTempQ.data(), PARAM_DATA_D, PARAM_QUERY_Q);
 
+}
+
+
+void MIPS::read_X_from_np(const Eigen::Ref<const MatrixXf> &mat){
+	MATRIX_X = mat;
+}
+
+void MIPS::read_Q_from_np(const Eigen::Ref<const MatrixXf> &mat){
+	MATRIX_Q = mat;
 }
 
 
@@ -98,6 +110,12 @@ void MIPS::extract_TopK_MIPS(const Ref<VectorXf> &p_vecQuery, const Ref<VectorXi
     priority_queue< IFPair, vector<IFPair>, greater<IFPair> > minQueTopK;
 
 
+    //new A class to do inner product by SIMD
+    hnswlib::InnerProductSpace inner(PARAM_DATA_D);
+    hnswlib::DISTFUNC<float> fstdistfunc_ = inner.get_dist_func();
+    void *dist_func_param_;
+    dist_func_param_ = inner.get_dist_func_param();
+	
     //for (int n = 0; n < (int)p_vecTopB.size(); ++n)
     for (const auto& iPointIdx: p_vecTopB)
     {
@@ -113,7 +131,8 @@ void MIPS::extract_TopK_MIPS(const Ref<VectorXf> &p_vecQuery, const Ref<VectorXi
             fValue = PROJECTED_X.row(iPointIdx) * p_vecQuery;
         else
         */
-        fValue = p_vecQuery.dot(MATRIX_X.col(iPointIdx));
+        fValue = fstdistfunc_(p_vecQuery.data(), MATRIX_X.col(iPointIdx).data(), dist_func_param_);
+        //fValue = p_vecQuery.dot(MATRIX_X.col(iPointIdx));
 
         // Insert into minQueue
         if ((int)minQueTopK.size() < p_iTopK)
@@ -128,14 +147,23 @@ void MIPS::extract_TopK_MIPS(const Ref<VectorXf> &p_vecQuery, const Ref<VectorXi
             }
         }
     }
-
-
+    
     for (int n = p_iTopK - 1; n >= 0; --n)
     {
         // Get point index
         p_vecTopK(n) = minQueTopK.top().m_iIndex;
         minQueTopK.pop();
     }
+}
+
+Eigen::MatrixXf MIPS::get_X(){
+
+	return MATRIX_X;
+} //get X matrix
+Eigen::MatrixXf MIPS::get_Q(){
+	
+	return MATRIX_Q;
+	
 }
 
 

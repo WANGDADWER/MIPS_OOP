@@ -111,7 +111,7 @@ struct IIPair
 };
 
 
-
+/*
 // Define global options
 extern int PARAM_DATA_N; // Number of points (rows) of X
 extern int PARAM_QUERY_Q; // Number of rows (queries) of Q
@@ -128,5 +128,5 @@ extern int PARAM_MIPS_NUM_SAMPLES; // Budgeted number of points to compute dot p
 
 extern const char *X_FILE_PATH;
 extern const char *Q_FILE_PATH;
-
+*/
 #endif // HEADER_H_INCLUDED

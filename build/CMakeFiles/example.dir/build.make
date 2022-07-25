@@ -153,19 +153,19 @@ CMakeFiles/example.dir/src/header.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/header.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wang/Desktop/MIPS_OOP-main/src/header.cpp -o CMakeFiles/example.dir/src/header.cpp.s
 
-CMakeFiles/example.dir/src/main.cpp.o: CMakeFiles/example.dir/flags.make
-CMakeFiles/example.dir/src/main.cpp.o: ../src/main.cpp
-CMakeFiles/example.dir/src/main.cpp.o: CMakeFiles/example.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wang/Desktop/MIPS_OOP-main/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/example.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/example.dir/src/main.cpp.o -MF CMakeFiles/example.dir/src/main.cpp.o.d -o CMakeFiles/example.dir/src/main.cpp.o -c /home/wang/Desktop/MIPS_OOP-main/src/main.cpp
+CMakeFiles/example.dir/src/wrap.cpp.o: CMakeFiles/example.dir/flags.make
+CMakeFiles/example.dir/src/wrap.cpp.o: ../src/wrap.cpp
+CMakeFiles/example.dir/src/wrap.cpp.o: CMakeFiles/example.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/wang/Desktop/MIPS_OOP-main/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/example.dir/src/wrap.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/example.dir/src/wrap.cpp.o -MF CMakeFiles/example.dir/src/wrap.cpp.o.d -o CMakeFiles/example.dir/src/wrap.cpp.o -c /home/wang/Desktop/MIPS_OOP-main/src/wrap.cpp
 
-CMakeFiles/example.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wang/Desktop/MIPS_OOP-main/src/main.cpp > CMakeFiles/example.dir/src/main.cpp.i
+CMakeFiles/example.dir/src/wrap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/example.dir/src/wrap.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/wang/Desktop/MIPS_OOP-main/src/wrap.cpp > CMakeFiles/example.dir/src/wrap.cpp.i
 
-CMakeFiles/example.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wang/Desktop/MIPS_OOP-main/src/main.cpp -o CMakeFiles/example.dir/src/main.cpp.s
+CMakeFiles/example.dir/src/wrap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/example.dir/src/wrap.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/wang/Desktop/MIPS_OOP-main/src/wrap.cpp -o CMakeFiles/example.dir/src/wrap.cpp.s
 
 # Object files for target example
 example_OBJECTS = \
@@ -175,7 +175,7 @@ example_OBJECTS = \
 "CMakeFiles/example.dir/src/fast_copy.c.o" \
 "CMakeFiles/example.dir/src/fht_sse.c.o" \
 "CMakeFiles/example.dir/src/header.cpp.o" \
-"CMakeFiles/example.dir/src/main.cpp.o"
+"CMakeFiles/example.dir/src/wrap.cpp.o"
 
 # External object files for target example
 example_EXTERNAL_OBJECTS =
@@ -186,7 +186,7 @@ example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/Utilities.cp
 example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/fast_copy.c.o
 example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/fht_sse.c.o
 example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/header.cpp.o
-example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/main.cpp.o
+example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/src/wrap.cpp.o
 example.cpython-310-x86_64-linux-gnu.so: CMakeFiles/example.dir/build.make
 example.cpython-310-x86_64-linux-gnu.so: /usr/lib/x86_64-linux-gnu/libboost_container.so.1.74.0
 example.cpython-310-x86_64-linux-gnu.so: /usr/lib/gcc/x86_64-linux-gnu/11/libgomp.so

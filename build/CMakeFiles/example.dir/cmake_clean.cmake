@@ -11,8 +11,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/example.dir/src/fht_sse.c.o.d"
   "CMakeFiles/example.dir/src/header.cpp.o"
   "CMakeFiles/example.dir/src/header.cpp.o.d"
-  "CMakeFiles/example.dir/src/main.cpp.o"
-  "CMakeFiles/example.dir/src/main.cpp.o.d"
+  "CMakeFiles/example.dir/src/wrap.cpp.o"
+  "CMakeFiles/example.dir/src/wrap.cpp.o.d"
   "example.cpython-310-x86_64-linux-gnu.so"
   "example.pdb"
 )

@@ -15,16 +15,16 @@ class MIPS{
 
 protected:
     // Input
-    int PARAM_DATA_N; // Number of points (rows) of X
-    int PARAM_QUERY_Q; // Number of rows (queries) of Q
-    int PARAM_DATA_D; // Number of dimensions
+    int PARAM_DATA_N = 0; // Number of points (rows) of X
+    int PARAM_QUERY_Q = 0; // Number of rows (queries) of Q
+    int PARAM_DATA_D = 0; // Number of dimensions
 
     // Internal params
-    bool PARAM_INTERNAL_SAVE_OUTPUT; // save the results
+    bool PARAM_INTERNAL_SAVE_OUTPUT = false; // save the results
 
     // MIPS
-    int PARAM_MIPS_TOP_K; // TopK largest entries from Xq
-    int PARAM_MIPS_TOP_B; // number of points to compute dot products
+    int PARAM_MIPS_TOP_K = 0; // TopK largest entries from Xq
+    int PARAM_MIPS_TOP_B = 0; // number of points to compute dot products
 
     // Input
     //Matrix<float, Dynamic, Dynamic, ColMajor> MATRIX_X; // matrix X
@@ -34,15 +34,28 @@ protected:
 
 
 public:
-
+    
+    MIPS():PARAM_DATA_N(0),PARAM_QUERY_Q(0),PARAM_DATA_D(0),
+    PARAM_MIPS_TOP_K(0),PARAM_MIPS_TOP_B(0),PARAM_INTERNAL_SAVE_OUTPUT(false){}
     MIPS(int N, int Q, int D, int K, int B, bool save);
 
-    void read_matrix_x(const char *path);  //read the file of matrix X MATRIX_X
+    void read_X_from_file(const char *path);  //read the file of matrix X MATRIX_X
 
-    void read_matrix_q(const char *path);  //read the file of matrix Q MATRIX_Q
-
+    void read_Q_from_file(const char *path);  //read the file of matrix Q MATRIX_Q
+    
+    //Load X and Q from numpy array
+    void read_X_from_np(const Eigen::Ref<const MatrixXf> &); //read X from numpy array
+    
+    void read_Q_from_np(const Eigen::Ref<const MatrixXf> &);
+    
     // compute distance and extract top-K
     void extract_TopK_MIPS(const Ref<VectorXf>&, const Ref<VectorXi>&, int, Ref<VectorXi>);
+    
+    Eigen::MatrixXf get_X(); //get X matrix
+    Eigen::MatrixXf get_Q(); //get Q matrix
+    
+    
+    
 };
 
 

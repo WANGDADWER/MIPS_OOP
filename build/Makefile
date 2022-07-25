@@ -273,29 +273,29 @@ src/header.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/header.cpp.s
 .PHONY : src/header.cpp.s
 
-src/main.o: src/main.cpp.o
-.PHONY : src/main.o
+src/wrap.o: src/wrap.cpp.o
+.PHONY : src/wrap.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/wrap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/wrap.cpp.o
+.PHONY : src/wrap.cpp.o
 
-src/main.i: src/main.cpp.i
-.PHONY : src/main.i
+src/wrap.i: src/wrap.cpp.i
+.PHONY : src/wrap.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/wrap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/wrap.cpp.i
+.PHONY : src/wrap.cpp.i
 
-src/main.s: src/main.cpp.s
-.PHONY : src/main.s
+src/wrap.s: src/wrap.cpp.s
+.PHONY : src/wrap.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/wrap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/example.dir/build.make CMakeFiles/example.dir/src/wrap.cpp.s
+.PHONY : src/wrap.cpp.s
 
 # Help Target
 help:
@@ -324,9 +324,9 @@ help:
 	@echo "... src/header.o"
 	@echo "... src/header.i"
 	@echo "... src/header.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/wrap.o"
+	@echo "... src/wrap.i"
+	@echo "... src/wrap.s"
 .PHONY : help
 
 

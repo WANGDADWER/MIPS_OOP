@@ -1,7 +1,6 @@
 #include "CEOs.h"
 #include <cmath>
 #include <omp.h>
-#include <pybind11/pybind11.h>
 // CEOs class method
 
 // ----------------------------------------1CEOsEst---------------------------------
@@ -128,7 +127,9 @@ Output:
 void OneCEOs::build_Index()
 {
     rotateData();
-
+    
+     cout << "The matrix X is of size " << MATRIX_X.rows() << "x" << MATRIX_X.cols() << endl;
+    
     MATRIX_CEOs = MatrixXi::Zero(PARAM_MIPS_TOP_B, PARAM_CEOs_D_UP);
 
     // Only need max
@@ -154,14 +155,15 @@ void OneCEOs::build_Index()
  *
  */
 
-void OneCEOs::find_TopK()
+MatrixXi OneCEOs::find_TopK()
 {
     auto startTime = chrono::high_resolution_clock::now();
     float projectTime = 0.0, topKTime = 0.0;
-
+    float dot_time = 0.0;
+    
     MatrixXi matTopK = MatrixXi::Zero(PARAM_MIPS_TOP_K, PARAM_QUERY_Q);
 
-    //#pragma omp parallel for reduction(+:projectTime, topKTime)
+    #pragma omp parallel for reduction(+:projectTime, topKTime)
     for (int q = 0; q < PARAM_QUERY_Q; ++q)
     {
         auto startTime = chrono::high_resolution_clock::now();
@@ -191,7 +193,11 @@ void OneCEOs::find_TopK()
 
         // Find top-K
         startTime = chrono::high_resolution_clock::now();
+        auto dot_t1  = chrono::high_resolution_clock::now();
         extract_TopK_MIPS(vecQuery, MATRIX_CEOs.col(maxIndex), PARAM_MIPS_TOP_K, matTopK.col(q));
+        auto dot_durtime = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - dot_t1);
+        dot_time += (float) dot_durtime.count() / 1000000;
+        
         durTime = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now() - startTime);
         topKTime += (float) durTime.count() / 1000000;
     }
@@ -201,7 +207,7 @@ void OneCEOs::find_TopK()
     // Print time complexity of each step
     printf("Estimation time in second is %f \n", projectTime);
     printf("TopK time in second is %f \n", topKTime);
-
+    printf("dot time in TopK (SIMD) in second is %f \n", dot_time);
     printf("1CEOs TopK Time in second is %f \n", (float) durTime.count() / 1000000);
 
     if (PARAM_INTERNAL_SAVE_OUTPUT)
@@ -209,6 +215,8 @@ void OneCEOs::find_TopK()
         string sFileName = "1CEOs_upD_" + int2str(PARAM_CEOs_D_UP) + "_Cand_" + int2str(PARAM_MIPS_TOP_B) + ".txt";
         outputFile(matTopK, sFileName);
     }
+    
+    return matTopK;
 }
 
 // ----------------------------------------2sCEOs---------------------------------
@@ -271,7 +279,7 @@ void TwoCEOs::build_Index()
  *
  */
 
-void TwoCEOs::find_TopK()
+MatrixXi TwoCEOs::find_TopK()
 {
     cout << "2CEOS find Top K" << endl;
     auto startTime = chrono::high_resolution_clock::now();
@@ -329,6 +337,7 @@ void TwoCEOs::find_TopK()
         string sFileName = "2CEOs_upD_" + int2str(PARAM_CEOs_D_UP) + "_Cand_" + int2str(PARAM_MIPS_TOP_B) + ".txt";
         outputFile(matTopK, sFileName);
     }
+    return matTopK;
 }
 
 
@@ -516,7 +525,7 @@ void sCEOsEst::build_Index()
  - Top K pair (pointIdx, dotProduct)
  *
  */
-void sCEOsEst::find_TopK()
+MatrixXi sCEOsEst::find_TopK()
 {
     auto startTime = chrono::high_resolution_clock::now();
     float estTime = 0.0, topKTime = 0.0;
@@ -583,6 +592,8 @@ void sCEOsEst::find_TopK()
     if (PARAM_INTERNAL_SAVE_OUTPUT)
         outputFile(matTopK, "CEOs_Est_upD_" + int2str(PARAM_CEOs_D_UP) +
                             "_s0_" + int2str(PARAM_CEOs_S0) + "_Cand_" + int2str(PARAM_MIPS_TOP_B) + ".txt");
+                            
+    return matTopK;
 }
 
 
@@ -650,7 +661,7 @@ void sCEOsTA::build_Index()
  - Top K pair (pointIdx, dotProduct)
  *
  */
-void sCEOsTA::find_TopK()
+MatrixXi sCEOsTA::find_TopK()
 {
     auto startTime = chrono::high_resolution_clock::now();
     float projectTime = 0.0, topBTime = 0.0, topKTime = 0.0;
@@ -813,6 +824,8 @@ void sCEOsTA::find_TopK()
     if (PARAM_INTERNAL_SAVE_OUTPUT)
         outputFile(matTopK, "CEOs_TA_upD_" + int2str(PARAM_CEOs_D_UP) +
                             "_s0_" + int2str(PARAM_CEOs_S0) + "_Cand_" + int2str(PARAM_MIPS_TOP_B) + ".txt");
+                            
+    return matTopK;
 }
 
 
@@ -961,7 +974,7 @@ void coCEOs::extract_TopB_TopK_Histogram(const unordered_map<int, float> &mapCou
  *
  */
 
-void coCEOs::Map_TopK()
+MatrixXi coCEOs::Map_TopK()
 {
     auto startTime = chrono::high_resolution_clock::now();
     float projectTime = 0.0, topKTime = 0.0;
@@ -1072,6 +1085,8 @@ void coCEOs::Map_TopK()
 
         outputFile(matTopK, sFileName);
     }
+    
+    return matTopK;
 }
 
 /** \brief Return approximate TopK for each query (using map to store samples)
@@ -1090,7 +1105,7 @@ void coCEOs::Map_TopK()
  *
  */
 
-void coCEOs::Vector_TopK()
+MatrixXi coCEOs::Vector_TopK()
 {
     auto startTime = chrono::high_resolution_clock::now();
     float projectTime = 0.0, topKTime = 0.0;
@@ -1171,49 +1186,20 @@ void coCEOs::Vector_TopK()
 
         outputFile(matTopK, sFileName);
     }
+    
+    return matTopK;
 }
 
 
-void coCEOs::find_TopK()
+MatrixXi coCEOs::find_TopK()
 {
 
     // Heuristic to decide using map or vector
     if (PARAM_MIPS_NUM_SAMPLES <= PARAM_DATA_N / 2)
-        Map_TopK();
+        return Map_TopK();
     else
-        Vector_TopK();
+        return Vector_TopK();
 }
 
 
-namespace py = pybind11;
 
-PYBIND11_MODULE(example, m)
-{
-    
-    py::class_<OneCEOs>(m, "OneCEOs")
-            .def(py::init<int, int, int, int, int, bool, int>())
-            .def("build_Index", &OneCEOs::build_Index)
-            .def("find_TopK", &OneCEOs::find_TopK)
-            .def("read_matrix_x", &OneCEOs::read_matrix_x)
-            .def("read_matrix_q", &OneCEOs::read_matrix_q);
-            
-    py::class_<TwoCEOs,OneCEOs>(m, "TwoCEOs")
-            .def(py::init<int, int, int, int, int, bool, int>())
-            .def("build_Index", &TwoCEOs::build_Index)
-            .def("find_TopK", &TwoCEOs::find_TopK);
-            
-    py::class_<sCEOsEst,OneCEOs>(m, "sCEOsEst")
-            .def(py::init<int, int, int, int, int, bool, int,int>())
-            .def("build_Index", &sCEOsEst::build_Index)
-            .def("find_TopK", &sCEOsEst::find_TopK);
-            
-    py::class_<sCEOsTA,sCEOsEst>(m, "sCEOsTA")
-            .def(py::init<int, int, int, int, int, bool, int,int>())
-            .def("build_Index", &sCEOsTA::build_Index)
-            .def("find_TopK", &sCEOsTA::find_TopK);
-            
-    py::class_<coCEOs,sCEOsEst>(m, "coCEOs")
-            .def(py::init<int, int, int, int, int, bool, int,int,int>())
-            .def("build_Index", &coCEOs::build_Index)
-            .def("find_TopK", &coCEOs::find_TopK);
-}

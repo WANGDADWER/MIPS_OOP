@@ -1,4 +1,4 @@
-CMakeFiles/example.dir/src/CEOs.cpp.o: \
+CMakeFiles/example2.dir/src/CEOs.cpp.o: \
  /home/wang/Desktop/MIPS_OOP-main/src/CEOs.cpp /usr/include/stdc-predef.h \
  /home/wang/Desktop/MIPS_OOP-main/include/CEOs.h \
  /usr/include/c++/11/iostream \

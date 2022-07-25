@@ -3,7 +3,7 @@
 /**
 Defining the default values of global variables
 */
-
+/**
 // Input
 int PARAM_DATA_N = 0 ; // Number of points (rows) of X
 int PARAM_QUERY_Q = 0; // Number of rows (queries) of Q
@@ -20,3 +20,5 @@ int PARAM_MIPS_NUM_SAMPLES = 10000; // Budgeted number of points to compute dot 
 //data file path
 const char *X_FILE_PATH;
 const char *Q_FILE_PATH;
+
+*/

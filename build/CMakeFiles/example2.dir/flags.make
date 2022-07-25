@@ -3,13 +3,13 @@
 
 # compile C with /usr/bin/cc
 # compile CXX with /usr/bin/c++
-C_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_CONTAINER_DYN_LINK -Dexample_EXPORTS
+C_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_CONTAINER_DYN_LINK -Dexample2_EXPORTS
 
 C_INCLUDES = -I/usr/include/eigen3 -I/home/wang/Desktop/MIPS_OOP-main/include -I/home/wang/Desktop/MIPS_OOP-main/src -isystem /home/wang/Desktop/MIPS_OOP-main/include/pybind11/include -isystem /usr/include/python3.10
 
 C_FLAGS = -fPIC -march=native
 
-CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_CONTAINER_DYN_LINK -Dexample_EXPORTS
+CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_CONTAINER_DYN_LINK -Dexample2_EXPORTS
 
 CXX_INCLUDES = -I/usr/include/eigen3 -I/home/wang/Desktop/MIPS_OOP-main/include -I/home/wang/Desktop/MIPS_OOP-main/src -isystem /home/wang/Desktop/MIPS_OOP-main/include/pybind11/include -isystem /usr/include/python3.10
 

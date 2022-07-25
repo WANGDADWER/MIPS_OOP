@@ -7,12 +7,21 @@ set(CMAKE_CXX_STANDARD 17)
 
 if(UNIX)
     message("current platform: Linux ")
-    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O2")
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-O3")
 elseif(WIN32)
     message("current platform: Windows ")
 else()
     message("current platform: unknown")
 endif()
+
+
+#判断编译器类型,如果是gcc编译器,则在编译选项中加入c++11支持
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_compile_options(-march=native)
+    message(STATUS "optional:-march=native")  
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
+
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(include)

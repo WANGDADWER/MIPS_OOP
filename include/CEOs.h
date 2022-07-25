@@ -11,7 +11,7 @@
 using namespace Eigen;
 
 //Define the class of the base 1CEOs, it is inherited from MIPS.
-class OneCEOs:public MIPS{
+class OneCEOs: public MIPS{
 
 protected:
 
@@ -34,18 +34,22 @@ protected:
 
 public:
 
-    OneCEOs(int N, int Q, int D,int K, int B, bool save, int U):MIPS(N, Q, D, K, B, save)
+    OneCEOs(int N, int Q, int D,int K, int B, bool save, int U):MIPS( N, Q, D, K, B, save)
     {
-        this->PARAM_CEOs_NUM_ROTATIONS = 3; //default setting
-        this->PARAM_INTERNAL_NOT_STORE_MATRIX_X = false;
-        this->PARAM_CEOs_D_UP = U;
+    	
+        PARAM_CEOs_NUM_ROTATIONS = 3; //default setting
+        PARAM_INTERNAL_NOT_STORE_MATRIX_X = false;
+        PARAM_CEOs_D_UP = U;
         
         printf("OneCEOs N:%d, Q:%d, D:%d, K:%d, B:%d\n",PARAM_DATA_N,PARAM_QUERY_Q,PARAM_DATA_D,PARAM_MIPS_TOP_K,PARAM_MIPS_TOP_B);
+    	
+    	printf("MIPS N:%d, Q:%d, D:%d, K:%d, B:%d\n", this->MIPS::PARAM_DATA_N,this->MIPS::PARAM_QUERY_Q,this->MIPS::PARAM_DATA_D,this->MIPS::PARAM_MIPS_TOP_K,this->MIPS::PARAM_MIPS_TOP_B);
+    
     };
 
     //each CEOs has their own build_Index and find_TopK functions.
     virtual void build_Index();
-    virtual void find_TopK();
+    virtual MatrixXi find_TopK();
 
 };
 
@@ -58,7 +62,7 @@ public:
     OneCEOs(N, Q, D, K, B, save, U){};
 
     void build_Index();
-    void find_TopK();
+    MatrixXi find_TopK();
 };
 #endif // CEOS_H_INCLUDED
 
@@ -81,7 +85,7 @@ public:
     OneCEOs(N, Q, D, K, B, save, U){ PARAM_CEOs_S0 = S;};
 
     virtual void build_Index();
-    virtual void find_TopK();
+    virtual MatrixXi find_TopK();
 };
 
 
@@ -116,7 +120,7 @@ public:
     sCEOsEst(N, Q, D, K, B, save, U, S){};
 
     void build_Index();
-    void find_TopK();
+    MatrixXi find_TopK();
 
 };
 
@@ -136,8 +140,8 @@ protected:
                                  int, int , Ref<VectorXi>);
 
 
-    void Vector_TopK();
-    void Map_TopK();
+    MatrixXi Vector_TopK();
+    MatrixXi Map_TopK();
 
 
 
@@ -150,6 +154,6 @@ public:
     };
 
     void build_Index();
-    void find_TopK();
+    MatrixXi find_TopK();
 
 };

@@ -14,7 +14,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/wang/Desktop/MIPS_OOP-main/src/MIPS.cpp" "CMakeFiles/example.dir/src/MIPS.cpp.o" "gcc" "CMakeFiles/example.dir/src/MIPS.cpp.o.d"
   "/home/wang/Desktop/MIPS_OOP-main/src/Utilities.cpp" "CMakeFiles/example.dir/src/Utilities.cpp.o" "gcc" "CMakeFiles/example.dir/src/Utilities.cpp.o.d"
   "/home/wang/Desktop/MIPS_OOP-main/src/header.cpp" "CMakeFiles/example.dir/src/header.cpp.o" "gcc" "CMakeFiles/example.dir/src/header.cpp.o.d"
-  "/home/wang/Desktop/MIPS_OOP-main/src/main.cpp" "CMakeFiles/example.dir/src/main.cpp.o" "gcc" "CMakeFiles/example.dir/src/main.cpp.o.d"
+  "/home/wang/Desktop/MIPS_OOP-main/src/wrap.cpp" "CMakeFiles/example.dir/src/wrap.cpp.o" "gcc" "CMakeFiles/example.dir/src/wrap.cpp.o.d"
   )
 
 # Targets to which this target links.
