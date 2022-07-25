@@ -9,4 +9,18 @@ cmake ..
 make
 ~~~
 
+
+
+
+## Update
+Multithreading is enabled
+and the use of inner products in the Hnsw library.
+(compile option -O3 -march-native)
+
+
 an example in test.py
+
+data source:
+https://www.cse.cuhk.edu.hk/systems/hash/gqr/datasets.html
+
+data format : fvecs
